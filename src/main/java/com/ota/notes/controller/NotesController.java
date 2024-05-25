@@ -1,6 +1,7 @@
 package com.ota.notes.controller;
 
 import com.ota.notes.dto.NoteRequestDto;
+import com.ota.notes.dto.NoteResponseDto;
 import com.ota.notes.model.Note;
 import com.ota.notes.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/notes")
@@ -23,20 +25,22 @@ public class NotesController {
     }
 
     @GetMapping
-    public List<Note> getAllNotes() {
-        return noteService.getAllNotes();
+    public List<NoteResponseDto> getAllNotes() {
+        return noteService.getAllNotes().stream().map(Note::toResponseDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Note> getNoteById(@PathVariable Long id) {
+    public ResponseEntity<NoteResponseDto> getNoteById(@PathVariable Long id) {
         Optional<Note> note = noteService.getNoteById(id);
-        return note.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return note.map(n -> ResponseEntity.ok(n.toResponseDto()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody NoteRequestDto noteRequestDto) {
+    public ResponseEntity<NoteResponseDto> updateNote(@PathVariable Long id, @RequestBody NoteRequestDto noteRequestDto) {
         Optional<Note> note = noteService.updateNote(id, noteRequestDto.toNote());
-        return note.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return note.map(n -> ResponseEntity.ok(n.toResponseDto()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

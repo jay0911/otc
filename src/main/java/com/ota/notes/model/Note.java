@@ -1,5 +1,7 @@
 package com.ota.notes.model;
 
+import com.ota.notes.dto.NoteResponseDto;
+
 public class Note {
     private Long id;
     private String title;
@@ -27,5 +29,13 @@ public class Note {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public NoteResponseDto toResponseDto(){
+        NoteResponseDto dto = new NoteResponseDto();
+        dto.setBody(body);
+        dto.setTitle(title);
+        dto.setId(id);
+        return dto;
     }
 }

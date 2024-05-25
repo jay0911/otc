@@ -1,5 +1,6 @@
 package com.ota.notes.service;
 
+import com.ota.notes.dto.NoteResponseDto;
 import com.ota.notes.model.Note;
 import com.ota.notes.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImpl implements NoteService {
