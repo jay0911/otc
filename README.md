@@ -1,9 +1,9 @@
 # Getting Started
 run as normal springboot port 8080
 
-on service layer, can be interchange the dependency to inmemory collection repository or file repository
+on service layer,change the qualifier name that can interchange the dependency to inmemory collection repository or file repository
 
-assumption to be thread safe using synchronize and atomic
+assumption to be thread safe using synchronize and atomic because of the requirement to use inmemory variable and using single file repository
 
 assumption that this will be 1 replica/pod/node only because of the design
 
